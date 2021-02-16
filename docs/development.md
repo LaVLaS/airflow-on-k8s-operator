@@ -28,9 +28,7 @@ make docker-build
 # push docker image
 make docker-push
 ```
-
-
-### Non GCP
+#### Non GCP
 Set IMG env to point to the desired registry image.
 ```bash
 # building docker image
@@ -39,6 +37,17 @@ make docker-build NOTGCP=true
 # push docker image
 make docker-push NOTGCP=true
 ```
+#### OpenShift
+Set DOCKERFILE to use ubi and IMG env to point to the desired registry image.
+```bash
+# building docker image
+# If you need to use a different image builder like podman/buildah, you can specify it in an optional argument IMG_BUILDER argument
+make docker-build DOCKERFILE=Dockerfile.ubi IMG_BUILDER=podman NOTGCP=true IMG=quay.io/my-registry/my-img-repository:v1.2.3
+
+# push docker image
+make docker-push IMG_BUILDER=podman NOTGCP=true IMG=quay.io/my-registry/my-img-repository:v1.2.3
+```
+
 ## Running in cluster
 ```bash
 # assumes kubeconfig is setup correctly

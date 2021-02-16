@@ -32,6 +32,7 @@ $ export IMG=gcr.io/myproject/airflow-controller:latest
 # Build and push
 $ make docker-push
 ```
+Refer to the [development docs](development.md#openshift) for instructions on building and deploying on OpenShift.
 
 ### Deploying Airflow Operator using manifests
 

@@ -4,7 +4,8 @@ ifndef NOTGCP
   SHORT_SHA := $(shell git rev-parse --short HEAD)
   IMG ?= gcr.io/${PROJECT_ID}/airflow-operator:${SHORT_SHA}
 endif
-
+DOCKERFILE := Dockerfile
+IMAGE_BUILDER := docker
 
 # Get the currently used golang install path (in GOPATH/bin, unless GOBIN is set)
 ifeq (,$(shell go env GOBIN))
@@ -74,13 +75,13 @@ generate: controller-gen
 
 # Build the docker image
 docker-build: test
-	docker build . -t ${IMG}
+	${IMAGE_BUILDER} build -f ${DOCKERFILE} . -t ${IMG}
 	@echo "updating kustomize image patch file for manager resource"
 	cd config/manager && kustomize edit set image controller=${IMG}
 
 # Push the docker image
 docker-push: docker-build
-	docker push ${IMG}
+	${IMAGE_BUILDER} push ${IMG}
 
 
 e2e-test:
